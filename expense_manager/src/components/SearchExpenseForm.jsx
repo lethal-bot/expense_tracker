@@ -10,9 +10,6 @@ export default function SearchExpenseForm({ arr, changeArr }) {
   });
 
   useEffect(() => {
-    // changeArr((prevArr)=>{
-
-    // })
     console.log("this will run");
   }, [searchData]);
 
