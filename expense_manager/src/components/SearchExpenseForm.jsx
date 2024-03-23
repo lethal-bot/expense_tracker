@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function SearchExpenseForm({ arr, changeArr }) {
+export default function SearchExpenseForm({ search, setSearch }) {
   const [searchData, setSearchData] = useState({
     addSelect: "all",
     searchSelect: "past 3 days",
@@ -10,7 +10,7 @@ export default function SearchExpenseForm({ arr, changeArr }) {
   });
 
   useEffect(() => {
-    console.log("this will run");
+    setSearch((prev) => ({ ...prev, filter: searchData }));
   }, [searchData]);
 
   function changeHandler(value, option) {

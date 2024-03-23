@@ -47,12 +47,14 @@ export default function AddExpenseForm({ arr, changeArr }) {
       <input
         type="text"
         name="title"
+        maxLength={30}
         placeholder={"Enter Title"}
         className={`text-gray-900 w-[25%] h-[80%] mx-1 my-2 rounded-lg  border  text-lg  focus:ring-blue-500 focus:border-blue-500 block p-2.5 text-center`}
       />
       <input
         type="text"
         name="description"
+        maxLength={50}
         placeholder={"Enter description"}
         className={`text-gray-900 w-[37%] h-[80%] mx-1 my-2 rounded-lg  border text-lg  focus:ring-blue-500 focus:border-blue-500 block p-2.5 text-center`}
       />

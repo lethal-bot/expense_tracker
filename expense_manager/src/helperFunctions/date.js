@@ -21,7 +21,7 @@ export function date(str) {
 
 export function getPastThreeDaysIST() {
     // Parse the current time in UTC
-    currentTimeUTC = new Date().toISOString()
+    const currentTimeUTC = new Date().toISOString()
     const currentTime = new Date(currentTimeUTC);
 
     // Array to store past three days in IST
@@ -52,28 +52,35 @@ export function getPastThreeDaysIST() {
 }
 
 
-/*export function getDatesOfCurrentWeek() {
-    const today = new Date(); // Get today's date
-    const currentDay = today.getUTCDay(); // Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
+export function getDatesOfWeek() {
+    const today = new Date();
+    const currentDay = today.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+    const IST_offset = 5.5; // IST is 5 hours and 30 minutes ahead of UTC
 
-    // Calculate the difference between the current day and Monday
-    const daysToMonday = (currentDay + 6) % 7;
+    // Adjust the current date to IST
+    const IST_currentTime = today.getTime() + (IST_offset * 60 * 60 * 1000);
+    const IST_currentDate = new Date(IST_currentTime);
 
-    const firstDayOfWeek = new Date(today); // Create a new date object for today
-    firstDayOfWeek.setUTCDate(today.getUTCDate() - daysToMonday); // Subtract the difference to get the first day of the week (Monday)
+    // Calculate the start date of the current week (Monday)
+    const firstDayOfWeek = new Date(IST_currentDate);
+    const offsetToMonday = currentDay === 0 ? 6 : currentDay - 1; // Adjust offset for Monday
+    firstDayOfWeek.setDate(IST_currentDate.getDate() - offsetToMonday);
 
-    const datesOfCurrentWeek = [];
+    // Array to store the dates of the week
+    const datesOfWeek = [];
 
-    // Loop to get all dates of the week
+    // Loop to get dates of all seven days in the week
     for (let i = 0; i < 7; i++) {
-        const date = new Date(firstDayOfWeek); // Create a new date object for the current date in the loop
-        date.setUTCDate(firstDayOfWeek.getUTCDate() + i); // Add the index to get the date of the week
-        datesOfCurrentWeek.push(date.toISOString().split('T')[0]); // Push the date to the array
+        const currentDate = new Date(firstDayOfWeek);
+        currentDate.setDate(firstDayOfWeek.getDate() + i);
+        datesOfWeek.push(currentDate);
     }
 
-    return datesOfCurrentWeek;
+    // Return array of formatted dates
+    return datesOfWeek.map(date => {
+        const dd = String(date.getDate()).padStart(2, '0');
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const yy = String(date.getFullYear()).slice(-2);
+        return `${dd}/${mm}/${yy}`;
+    });
 }
-
-// Example usage:
-const datesOfCurrentWeek = getDatesOfCurrentWeek();
-console.log(datesOfCurrentWeek);*/

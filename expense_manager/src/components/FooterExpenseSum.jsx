@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function FooterExpenseSum({ arr, changeArr }) {
+export default function FooterExpenseSum({ arr }) {
   const [select, setSelect] = useState("all");
   const [sum, setSum] = useState(0);
 

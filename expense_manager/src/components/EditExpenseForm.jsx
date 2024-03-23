@@ -71,12 +71,14 @@ export default function EditExpenseForm({ data, modal, changeData }) {
         <input
           type="text"
           name="title"
+          maxLength={30}
           defaultValue={data.title}
           className={`${border.titleBorderColor} w-[25%] h-[80%] bg-[#3D4884]  mx-1 my-2 rounded-lg  border text-lg  focus:ring-blue-500 focus:border-blue-500 block p-2.5 text-center`}
         />
         <input
           type="text"
           name="description"
+          maxLength={50}
           defaultValue={data.description}
           className="w-[37%] h-[80%] bg-[#3D4884] border-[#3d4884] mx-1 my-2 rounded-lg  border text-lg  focus:ring-blue-500 focus:border-blue-500 block p-2.5 text-center"
         />
