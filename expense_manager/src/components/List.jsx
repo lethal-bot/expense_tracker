@@ -5,6 +5,7 @@ import {
   date,
   getDatesOfWeek,
 } from "../helperFunctions/date";
+import { addExpense } from "../config";
 
 export default function List({
   arr: updatedArr,
@@ -131,7 +132,7 @@ export default function List({
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://localhost:3000/expense", {
+        const res = await fetch(addExpense, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

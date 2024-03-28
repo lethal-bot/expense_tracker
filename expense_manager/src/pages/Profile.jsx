@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import Box from "../components/Box";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
+import { me, logout, logoutall } from "../config";
 export default function Profile() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   useEffect(() => {
     async function aboutMe() {
       try {
-        const res = await fetch("http://localhost:3000/users/me", {
+        const res = await fetch(me, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -20,7 +21,7 @@ export default function Profile() {
         localStorage.setItem("id", result._id);
         setUserData({
           ...result,
-          avatar: `http://localhost:3000/users/${result._id}/avatar`,
+          avatar: `https://money-manager-cft3.onrender.com/users/${result._id}/avatar`,
         });
       } catch (e) {
         console.log(e);
@@ -31,7 +32,7 @@ export default function Profile() {
 
   async function logoutHandler() {
     try {
-      const res = await fetch(`http://localhost:3000/users/logout`, {
+      const res = await fetch(logout, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +49,7 @@ export default function Profile() {
 
   async function logoutAllHandler() {
     try {
-      const res = await fetch(`http://localhost:3000/users/logoutAll`, {
+      const res = await fetch(logoutall, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

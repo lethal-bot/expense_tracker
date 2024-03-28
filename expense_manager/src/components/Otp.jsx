@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useRegistration from "../context/RegistrationContext";
+import { resendOTP, verifyOTP } from "../config";
 
 export default function Otp() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export default function Otp() {
     data.email = email.length == 0 ? localStorage.getItem("email") : email;
     console.log(data);
     try {
-      const res = await fetch("http://localhost:3000/verify/otp", {
+      const res = await fetch(verifyOTP, {
         method: "POST",
         body: JSON.stringify({ ...data }),
         headers: {
@@ -30,7 +31,7 @@ export default function Otp() {
 
   async function resendOtp(e) {
     try {
-      const res = await fetch("http://localhost:3000/verify/resendOtp", {
+      const res = await fetch(resendOTP, {
         method: "POST",
         body: JSON.stringify({ email }),
         headers: {

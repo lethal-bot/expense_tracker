@@ -19,14 +19,17 @@ export default function Item({
     if (e.target.value == "edit") setEdit(true);
     if (e.target.value == "delete") {
       try {
-        const res = await fetch(`http://localhost:3000/expense/${data._id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            // prettier-ignore
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const res = await fetch(
+          `https://money-manager-cft3.onrender.com/expense/${data._id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              // prettier-ignore
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         changeUpdatedArr((prevArr) =>
           prevArr.filter((item) => item._id !== data._id)
         );

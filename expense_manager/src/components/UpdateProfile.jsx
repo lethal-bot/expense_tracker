@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Box from "./Box";
 import Button from "./Button";
 import UploadPhoto from "./UploadPhoto";
+import { avatar, me } from "../config";
 export default function UpdateProfile() {
   const [userData, setUserData] = useState({
     window: false,
@@ -11,7 +12,7 @@ export default function UpdateProfile() {
   useEffect(() => {
     async function aboutMe() {
       try {
-        const res = await fetch("http://localhost:3000/users/me", {
+        const res = await fetch(me, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -24,7 +25,7 @@ export default function UpdateProfile() {
         setUserData((prev) => ({
           ...prev,
           ...result,
-          avatar: `http://localhost:3000/users/${result._id}/avatar`,
+          avatar: `https://money-manager-cft3.onrender.com/users/${result._id}/avatar`,
         }));
       } catch (e) {
         console.log(e);
@@ -37,7 +38,7 @@ export default function UpdateProfile() {
   async function deleteHandler() {
     setUserData((prev) => ({ ...prev, avatar: undefined }));
     try {
-      const res = await fetch("http://localhost:3000/users/me/avatar", {
+      const res = await fetch(avatar, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

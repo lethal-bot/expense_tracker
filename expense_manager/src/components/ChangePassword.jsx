@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { me } from "../config";
 
 export default function ChangePassword() {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ export default function ChangePassword() {
     const data = Object.fromEntries(fb.entries());
     if (data.newPassword === data.reEnterPassword) {
       try {
-        const res = await fetch("http://localhost:3000/users/me", {
+        const res = await fetch(me, {
           method: "PATCH",
           body: JSON.stringify({ password: data.newPassword }),
           headers: {

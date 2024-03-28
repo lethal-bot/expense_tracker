@@ -2,6 +2,7 @@ import { useState } from "react";
 import ForgetOtp from "./ForgetOtp";
 import ChangePassword from "./ChangePassword";
 import Box from "./Box";
+import { resendOTP } from "../config";
 
 export default function ForgetPassword() {
   const [portal, setPortal] = useState({ window: "email", data: {} });
@@ -10,7 +11,7 @@ export default function ForgetPassword() {
     const fd = new FormData(e.target);
     const data = Object.fromEntries(fd.entries());
     try {
-      const res = await fetch("http://localhost:3000/verify/resendOtp", {
+      const res = await fetch(resendOTP, {
         method: "POST",
         body: JSON.stringify({ email: data.email }),
         headers: {

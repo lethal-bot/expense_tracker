@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "./Button";
+import { avatar } from "../config";
 
 export default function UploadPhoto({ setUserData }) {
   const [file, setFile] = useState();
@@ -14,7 +15,7 @@ export default function UploadPhoto({ setUserData }) {
     fd.append("avatar", file);
     console.log(fd.get("avatar"));
     try {
-      const res = await fetch("http://localhost:3000/users/me/avatar", {
+      const res = await fetch(avatar, {
         method: "POST",
         body: fd,
         headers: {

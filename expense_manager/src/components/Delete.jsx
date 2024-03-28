@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import Box from "./Box";
 import Button from "./Button";
+import { me } from "../config";
 export default function Delete() {
   const navigate = useNavigate();
   async function deleteHandler() {
     try {
-      const res = await fetch("http://localhost:3000/users/me", {
+      const res = await fetch(me, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

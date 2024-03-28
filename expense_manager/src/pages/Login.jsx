@@ -1,5 +1,6 @@
 import Box from "../components/Box";
 import Button from "../components/Button";
+import { login, resendOTP } from "../config";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -12,7 +13,7 @@ export default function Login() {
     console.log(data);
     if (data.email.length != 0 && data.password.length > 6) {
       try {
-        const res = await fetch("http://localhost:3000/users/login", {
+        const res = await fetch(login, {
           method: "POST",
           body: JSON.stringify({ ...data }),
           headers: {
@@ -22,7 +23,7 @@ export default function Login() {
         const result = await res.json();
         if (result.message === "not verified") {
           try {
-            const res = await fetch("http://localhost:3000/verify/resendOtp", {
+            const res = await fetch(resendOTP, {
               method: "POST",
               body: JSON.stringify({ email: localStorage.getItem("email") }),
               headers: {

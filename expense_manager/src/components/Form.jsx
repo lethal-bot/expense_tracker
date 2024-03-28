@@ -1,6 +1,7 @@
 import useRegistration from "../context/RegistrationContext";
 import Button from "./Button";
 import { Link } from "react-router-dom";
+import { register } from "../config";
 export default function Form() {
   const { open, email, getEmail } = useRegistration();
   async function submitHandler(e) {
@@ -10,7 +11,7 @@ export default function Form() {
     getEmail(data.email);
     console.log(JSON.stringify({ ...data }));
     try {
-      const res = await fetch("http://localhost:3000/users", {
+      const res = await fetch(register, {
         method: "POST",
         body: JSON.stringify({ ...data }),
         headers: {

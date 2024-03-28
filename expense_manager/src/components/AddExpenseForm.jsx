@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { addExpense } from "../config";
 
 export default function AddExpenseForm({ arr, changeArr }) {
   const [select, setSelect] = useState({
@@ -21,7 +22,7 @@ export default function AddExpenseForm({ arr, changeArr }) {
     data.price = parseFloat(data.price);
     console.log(data);
     try {
-      const res = await fetch("http://localhost:3000/expense", {
+      const res = await fetch(addExpense, {
         method: "POST",
         body: JSON.stringify({ ...data }),
         headers: {

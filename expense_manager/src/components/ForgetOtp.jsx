@@ -1,3 +1,5 @@
+import { resendOTP, verifyOTP } from "../config";
+
 export default function ForgetOtp({ email, setPortal }) {
   async function submitHandler(e) {
     e.preventDefault();
@@ -6,7 +8,7 @@ export default function ForgetOtp({ email, setPortal }) {
     data.email = email;
     console.log(data);
     try {
-      const res = await fetch("http://localhost:3000/verify/otp", {
+      const res = await fetch(verifyOTP, {
         method: "POST",
         body: JSON.stringify({ ...data }),
         headers: {
@@ -24,7 +26,7 @@ export default function ForgetOtp({ email, setPortal }) {
 
   async function resendOtp(e) {
     try {
-      const res = await fetch("http://localhost:3000/verify/resendOtp", {
+      const res = await fetch(resendOTP, {
         method: "POST",
         body: JSON.stringify({ email }),
         headers: {
