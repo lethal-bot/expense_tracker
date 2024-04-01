@@ -7,7 +7,11 @@ export default function Track() {
   const [arr, updateArr] = useState([]);
   const changeArr = (temp) => updateArr(temp);
   const verified = localStorage.getItem("verified");
-  const token = localStorage.getItem("token");
+  const token =
+    localStorage.getItem("token") == null ||
+    localStorage.getItem("token") == "undefined"
+      ? false
+      : true;
   return verified && token ? (
     <div className="mx-10 ">
       <AddExpenseForm arr={arr} changeArr={changeArr} />

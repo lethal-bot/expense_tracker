@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 
 export default function Home() {
-  const token = localStorage.getItem("token");
+  const token =
+    localStorage.getItem("token") == null ||
+    localStorage.getItem("token") == "undefined"
+      ? false
+      : true;
   const verified = localStorage.getItem("verified");
   return (
     <div className="flex h-[650px] w-full items-center justify-center flex-col">

@@ -73,7 +73,11 @@ export default function Profile() {
     navigate("/profile/update");
   }
   const verified = localStorage.getItem("verified");
-  const token = localStorage.getItem("token");
+  const token =
+    localStorage.getItem("token") == null ||
+    localStorage.getItem("token") == "undefined"
+      ? false
+      : true;
   return verified && token ? (
     <div className="h-[650px] w-[100%] flex items-center justify-center">
       <Box>
