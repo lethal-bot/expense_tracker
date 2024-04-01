@@ -38,6 +38,7 @@ export default function Login() {
         console.log(result);
         const token = result.token;
         localStorage.setItem("token", token);
+        localStorage.setItem("verified", true);
         return navigate("/track");
       } catch (e) {
         console.log(e);

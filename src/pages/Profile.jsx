@@ -3,6 +3,7 @@ import Box from "../components/Box";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { me, logout, logoutall } from "../config";
+import NoAuth from "../components/NoAuth";
 export default function Profile() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
@@ -71,8 +72,9 @@ export default function Profile() {
   function updateHandler() {
     navigate("/profile/update");
   }
-
-  return (
+  const verified = localStorage.getItem("verified");
+  const token = localStorage.getItem("token");
+  return verified && token ? (
     <div className="h-[650px] w-[100%] flex items-center justify-center">
       <Box>
         {!userData.avatar && (
@@ -107,5 +109,7 @@ export default function Profile() {
         </div>
       </Box>
     </div>
+  ) : (
+    <NoAuth />
   );
 }
