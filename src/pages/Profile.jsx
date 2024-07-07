@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { me, logout, logoutall } from "../config";
 import NoAuth from "../components/NoAuth";
+
 export default function Profile() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});

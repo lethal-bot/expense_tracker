@@ -23,6 +23,7 @@ export default function Otp() {
       if (!res.ok) throw new Error("unmatched");
       const result = await res.json();
       localStorage.setItem("token", result.token);
+      localStorage.setItem("verified", true);
       navigate("/track");
     } catch (e) {
       console.log(e);
