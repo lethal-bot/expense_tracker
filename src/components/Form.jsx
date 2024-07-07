@@ -8,7 +8,7 @@ export default function Form() {
     e.preventDefault();
     const fd = new FormData(e.target);
     const data = Object.fromEntries(fd.entries());
-    getEmail(data.email);
+
     console.log(JSON.stringify({ ...data }));
     try {
       const res = await fetch(register, {
@@ -21,6 +21,7 @@ export default function Form() {
       if (!res.ok) throw new Error("already registered");
       const result = await res.json();
       const token = result.token;
+      getEmail(data.email);
       console.log(res);
       saveToStorage(token);
       open();

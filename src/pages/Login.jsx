@@ -1,12 +1,17 @@
+import { useState } from "react";
 import Box from "../components/Box";
 import Button from "../components/Button";
 import { login, resendOTP } from "../config";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({ error: "" });
   const navigate = useNavigate();
   async function submitHandler(e) {
     e.preventDefault();
+    setLoading(true);
+
     const fd = new FormData(e.target);
     const data = Object.fromEntries(fd.entries());
     localStorage.setItem("email", data.email);
@@ -20,7 +25,13 @@ export default function Login() {
             "Content-Type": "application/json",
           },
         });
+        if (res.status != 401 && res.status != 200) {
+          setLoading(false);
+          setError({ error: "invalid email/password" });
+          return;
+        }
         const result = await res.json();
+        console.log(result);
         if (result.message === "not verified") {
           try {
             const res = await fetch(resendOTP, {
@@ -31,7 +42,8 @@ export default function Login() {
               },
             });
           } catch (e) {
-            console.log(e);
+            setLoading(false);
+            setError({ error: "server error" });
           }
           return navigate("/login/otp");
         }
@@ -42,7 +54,12 @@ export default function Login() {
         return navigate("/track");
       } catch (e) {
         console.log(e);
+      } finally {
+        setLoading(false);
       }
+    } else {
+      setError({ error: "invalid email/password" });
+      setLoading(false);
     }
   }
   return (
@@ -79,12 +96,18 @@ export default function Login() {
             />
           </div>
           <div className="my-5">
-            <Button>Login</Button>
+            {loading ? (
+              <Button disable={true}>Loging in...</Button>
+            ) : (
+              <Button>Login</Button>
+            )}
           </div>
           <div className="flex items-center justify-around w-[100%]">
             <Link to={"/register"}>Don't have an Account?</Link>
             <Link to={"/login/forget"}>Forget Password</Link>
           </div>
+
+          <p className="text-center text-red-600 text-xl">{error.error}</p>
         </form>
       </Box>
     </div>

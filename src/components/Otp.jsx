@@ -51,7 +51,7 @@ export default function Otp() {
     >
       <div className="mb-5">
         <label htmlFor="otp" className="block mb-2 text-lg font-medium ">
-          Enter OTP sent into {email}
+          Enter OTP sent into {email ? email : localStorage.getItem("email")}
         </label>
         <input
           type="number"

@@ -8,9 +8,12 @@ import NoAuth from "../components/NoAuth";
 export default function Profile() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     async function aboutMe() {
+      if (!localStorage.getItem("token")) return;
       try {
+        setLoading(true);
         const res = await fetch(me, {
           method: "GET",
           headers: {
@@ -19,12 +22,27 @@ export default function Profile() {
             "Authorization": `Bearer ${localStorage.getItem("token")}`,
           },
         });
+        if (!res.ok) {
+          localStorage.clear();
+          setLoading(false);
+          return;
+        }
         const result = await res.json();
         localStorage.setItem("id", result._id);
-        setUserData({
-          ...result,
-          avatar: `https://money-manager-cft3.onrender.com/users/${result._id}/avatar`,
-        });
+        let avatar;
+        try {
+          const image = await fetch(
+            `https://money-manager-cft3.onrender.com/users/${result._id}/avatar`
+          );
+          if (!image.ok) avatar = null;
+          else
+            avatar = `https://money-manager-cft3.onrender.com/users/${result._id}/avatar`;
+          setUserData({
+            ...result,
+            avatar: avatar,
+          });
+        } catch (e) {}
+        setLoading(false);
       } catch (e) {
         console.log(e);
       }
@@ -79,7 +97,13 @@ export default function Profile() {
     localStorage.getItem("token") == "undefined"
       ? false
       : true;
-  return verified && token ? (
+  return loading ? (
+    <div className="h-[650px] w-[100%] flex items-center justify-center">
+      <Box>
+        <h2 className="relative top-[50%] text-center text-xl">Loading...</h2>
+      </Box>
+    </div>
+  ) : verified && token ? (
     <div className="h-[650px] w-[100%] flex items-center justify-center">
       <Box>
         {!userData.avatar && (
